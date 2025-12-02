@@ -123,6 +123,8 @@ class Varukorg {
         }
         return summa;
     };
+
+    tomKorg = () => (this.korg = []); //Tömmer varukorgen. Kanske bör ha någon UI som kollar att man är säker?
 }
 
 const aSort = new Sortiment();
