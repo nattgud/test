@@ -53,11 +53,11 @@ class Sortiment {
     };
 
     // Nedanstående funktioner hämtar priset, namnet, samt kategorin på produkten med ett visst id.
-    getPris = (id) => this.getProd(id).getPris;
+    getPris = (id) => this.getProd(id).getPris();
 
-    getNamn = (id) => this.getProd(id).getNamn;
+    getNamn = (id) => this.getProd(id).getNamn();
 
-    getKategori = (id) => this.getProd(id).getKategori;
+    getKategori = (id) => this.getProd(id).getKategori();
 }
 
 class Varukorg {
