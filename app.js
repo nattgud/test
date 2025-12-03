@@ -29,10 +29,10 @@ class Product {
     getId = () => this.id;
 }
 
-class Sortiment {
+class ProduktLista {
     //Skapar ett sortiment som en tom array.
     constructor() {
-        this.sort = [];
+        this.prodLista = [];
     }
 
     populera() {
@@ -41,11 +41,11 @@ class Sortiment {
 
     // Lägger till en produkt i sortimentet med id, namn, kategori, och pris.
     addProd = (id, namn, kategori, pris) =>
-        this.sort.push(new Product(id, namn, kategori, pris));
+        this.prodLista.push(new Product(id, namn, kategori, pris));
 
     // Hämtar produkten med ett visst id. Här borde det finnas någon sorts felkontroll också ifall id:t inte finns.
     getProd = (id) => {
-        for (const element of this.sort) {
+        for (const element of this.prodLista) {
             if (element.getId() === id) {
                 return element;
             }
@@ -62,9 +62,9 @@ class Sortiment {
 
 class Varukorg {
     //Skapar en tom varukorg som en tom array. Arrayen ska sedan innehålla objekt på formen {id, antal}. Varukorgen är även länkad till ett visst sortiment.
-    constructor(sort) {
+    constructor(prodLista) {
         this.korg = [];
-        this.sort = sort;
+        this.prodLista = prodLista;
     }
 
     indexVara = (id) => {
@@ -111,7 +111,7 @@ class Varukorg {
         if (i === undefined) {
             return 0;
         } else {
-            return this.sort.getPris(id) * i.antal;
+            return this.prodLista.getPris(id) * i.antal;
         }
     };
 
@@ -119,13 +119,22 @@ class Varukorg {
         // Gå genom hela varukorgen och för varje rad, räkna varupris * antal och lägg till i summan
         let summa = 0;
         for (let i of this.korg) {
-            summa += this.sort.getPris(i.id) * i.antal;
+            summa += this.prodLista.getPris(i.id) * i.antal;
         }
         return summa;
+    };
+
+    antalIKorg = () => {
+        //returnerar antalet produkter i varukorgen
+        let total = 0;
+        for (let i of this.korg) {
+            total += i.antal;
+        }
+        return total;
     };
 
     tomKorg = () => (this.korg = []); //Tömmer varukorgen. Kanske bör ha någon UI som kollar att man är säker?
 }
 
-const aSort = new Sortiment();
-const aKorg = new Varukorg(aSort);
+const produktListan = new ProduktLista();
+const varukorgen = new Varukorg(produktListan);
