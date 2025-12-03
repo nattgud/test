@@ -61,7 +61,7 @@ class Sortiment {
 }
 
 class Varukorg {
-    //Skapar en tom varukorg som en tom array. Arrayen ska sedan innehålla arrayer på formen [id, antal]. Varukorgen är även länkad till ett visst sortiment.
+    //Skapar en tom varukorg som en tom array. Arrayen ska sedan innehålla objekt på formen {id, antal}. Varukorgen är även länkad till ett visst sortiment.
     constructor(sort) {
         this.korg = [];
         this.sort = sort;
@@ -71,7 +71,7 @@ class Varukorg {
         // returnerar indexet för varan med ett visst id i varukorgen, eller undefined om den inte finns.
         let i = 0;
         while (i < this.korg.length) {
-            if (this.korg[(i, 0)] === id) return i;
+            if (this.korg[i].id === id) return i;
             i++;
         }
         return undefined;
@@ -86,12 +86,12 @@ class Varukorg {
     };
 
     laggIKorg = (id, antal) => {
-        // Hämta raden i varukorgen med ett visst id. Om det inte finns, lägg in en ny rad med [id, antal]. Annars, öka antalet på den raden med antal.
+        // Hämta raden i varukorgen med ett visst id. Om det inte finns, lägg in en ny rad med {id, antal}. Annars, öka antalet på den raden med antal.
         const i = this.getVara(id);
         if (i === undefined) {
-            this.korg.push([id, antal]);
+            this.korg.push({ id: id, antal: antal });
         } else {
-            i[1] += antal;
+            i.antal += antal;
         }
     };
 
@@ -101,7 +101,7 @@ class Varukorg {
         if (i === undefined) {
             return;
         } else {
-            i[1] = Math.max(0, i[1] - antal);
+            i.antal = Math.max(0, i.antal - antal);
         }
     };
 
@@ -111,7 +111,7 @@ class Varukorg {
         if (i === undefined) {
             return 0;
         } else {
-            return this.sort.getPris(id) * i[1];
+            return this.sort.getPris(id) * i.antal;
         }
     };
 
@@ -119,7 +119,7 @@ class Varukorg {
         // Gå genom hela varukorgen och för varje rad, räkna varupris * antal och lägg till i summan
         let summa = 0;
         for (let i of this.korg) {
-            summa += this.sort.getPris(i[0]) * i[1];
+            summa += this.sort.getPris(i.id) * i.antal;
         }
         return summa;
     };
